@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Notes: Newton's Laws</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 850px;
+      margin: 40px auto;
+      line-height: 1.6;
+      padding: 0 20px;
+      background: #f7f7f7;
+      color: #222;
+    }
+
+    h1, h2 {
+      color: #1f3a5f;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .definition {
+      border-left: 5px solid #1f3a5f;
+      padding-left: 15px;
+      background: #eef4ff;
+    }
+
+    button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      background: #1f3a5f;
+      color: white;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #345b8c;
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+
+    .feedback {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .simulation-output {
+      font-size: 1.2em;
+      background: #eef4ff;
+      padding: 12px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Interactive Notes: Newton's Laws</h1>
+
+  <div class="card">
+    <h2>1. Newton's First Law</h2>
+    <p>
+      An object remains at rest or moves with constant velocity unless acted upon by a net external force.
+    </p>
+
+    <div class="definition">
+      <strong>Definition:</strong> If the net force on an object is zero, its acceleration is zero.
+    </div>
+
+    <button onclick="toggleText('first-law-extra')">Show example</button>
+
+    <p id="first-law-extra" style="display: none;">
+      Example: A hockey puck sliding on nearly frictionless ice keeps moving almost with constant velocity because the horizontal net force is very small.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>2. Newton's Second Law</h2>
+    <p>
+      Newton's second law relates force, mass, and acceleration:
+    </p>
+
+    <div class="definition">
+      <strong>Formula:</strong> F = m a
+    </div>
+
+    <p>
+      Use the sliders below to explore how acceleration depends on force and mass.
+    </p>
+
+    <label>
+      Force F: <span id="force-value">10</span> N
+    </label>
+    <input type="range" id="force" min="0" max="50" value="10" oninput="updateSimulation()">
+
+    <label>
+      Mass m: <span id="mass-value">2</span> kg
+    </label>
+    <input type="range" id="mass" min="1" max="20" value="2" oninput="updateSimulation()">
+
+    <p class="simulation-output">
+      Acceleration: <span id="acceleration-value">5.00</span> m/s²
+    </p>
+
+    <p>
+      Try increasing the mass while keeping the force fixed. What happens to the acceleration?
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>3. Newton's Third Law</h2>
+    <p>
+      When object A exerts a force on object B, object B exerts an equal and opposite force on object A.
+    </p>
+
+    <div class="definition">
+      <strong>Important:</strong> The two forces act on different objects, so they do not cancel each other on a single object.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Concept Check</h2>
+
+    <p>
+      A cart is pushed with a constant net force. If the mass of the cart is doubled, what happens to its acceleration?
+    </p>
+
+    <button onclick="checkAnswer('A')">It doubles</button>
+    <button onclick="checkAnswer('B')">It stays the same</button>
+    <button onclick="checkAnswer('C')">It is halved</button>
+
+    <p id="quiz-feedback" class="feedback"></p>
+  </div>
+
+  <script>
+    function toggleText(id) {
+      const element = document.getElementById(id);
+      if (element.style.display === "none") {
+        element.style.display = "block";
+      } else {
+        element.style.display = "none";
+      }
+    }
+
+    function updateSimulation() {
+      const force = Number(document.getElementById("force").value);
+      const mass = Number(document.getElementById("mass").value);
+      const acceleration = force / mass;
+
+      document.getElementById("force-value").textContent = force;
+      document.getElementById("mass-value").textContent = mass;
+      document.getElementById("acceleration-value").textContent = acceleration.toFixed(2);
+    }
+
+    function checkAnswer(answer) {
+      const feedback = document.getElementById("quiz-feedback");
+
+      if (answer === "C") {
+        feedback.textContent = "Correct. Since a = F/m, doubling the mass halves the acceleration.";
+        feedback.style.color = "green";
+      } else {
+        feedback.textContent = "Not quite. Use Newton's second law: a = F/m.";
+        feedback.style.color = "darkred";
+      }
+    }
+  </script>
+
+</body>
+</html>
